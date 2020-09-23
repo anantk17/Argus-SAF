@@ -75,7 +75,7 @@ class SourceAndSinkManager(object):
             taint_tags = ['TOP'] if not taint_tag_raw else taint_tag_raw.split('|')
             tag = m.group(3)
             pos_raw = m.group(4)
-            positions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] if not pos_raw else map(int, pos_raw.split('|'))
+            positions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] if not pos_raw else list(map(int, pos_raw.split('|')))
             if tag == "_SOURCE_":
                 self._sources[api_name] = taint_tags
             elif tag == "_SINK_":

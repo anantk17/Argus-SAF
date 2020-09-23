@@ -23,7 +23,7 @@ class RegisterNativeMethods(NativeDroidSimProcedure):
             signature = method.signature.deref.string.concrete
             fn_ptr = method.fnPtr.resolved.args[0]
             dynamic_map = self._analysis_center.get_dynamic_register_map()
-            dynamic_map['%s:%s' % (name, signature)] = long(fn_ptr)
+            dynamic_map['%s:%s' % (name, signature)] = int(fn_ptr)
 
     def __repr__(self):
         return 'RegisterNativeMethods'

@@ -30,7 +30,7 @@ class AndroidLogPrint(angr.SimProcedure):
         stack_position = list()
         if arg_num > 1:
             stack_args_num = arg_num - 1
-            stack_position = range(1, stack_args_num + 1)
+            stack_position = list(range(1, stack_args_num + 1))
         jobject = JObject(self.project)
         return_value = claripy.BVV(jobject.ptr, self.project.arch.bits)
         return_value = return_value.annotate(

@@ -292,7 +292,7 @@ def icc_handle(analysis_center, class_name, method_name, return_annotation, simp
                     component_name = annotation.icc_info['component_name']
                     extra = annotation.icc_info['extra']
                     source_args = set()
-                    for _, extra_annotation in extra.items():
+                    for _, extra_annotation in list(extra.items()):
                         if extra_annotation.source.startswith('arg'):
                             arg_index = re.split('arg|_', extra_annotation.source)[1]
                             source_args.add(int(arg_index))
@@ -2293,7 +2293,7 @@ class RegisterNatives(NativeDroidSimProcedure):
             signature = method.signature.deref.string.concrete
             fn_ptr = method.fnPtr.resolved.args[0]
             dynamic_map = self._analysis_center.get_dynamic_register_map()
-            dynamic_map['%s:%s' % (name, signature)] = long(fn_ptr)
+            dynamic_map['%s:%s' % (name, signature)] = int(fn_ptr)
         jint = JInt(self.project)
         return_value = claripy.BVV(jint.ptr, self.project.arch.bits)
         return return_value
@@ -3217,7 +3217,7 @@ class JNINativeInterface(ExternObject):
                     self._project.hook(addr, angr.SIM_PROCEDURES['stubs']['ReturnUnconstrained']())
 
         # iterate through the mapping
-        for index, name in self.JNINativeInterface_index_to_name.iteritems():
+        for index, name in self.JNINativeInterface_index_to_name.items():
             # if the mapped value is None (there are 4 reserved entries), hook it with PathTerminator
             if name.startswith('reserved'):
                 addr = self.allocate(self._fptr_size)

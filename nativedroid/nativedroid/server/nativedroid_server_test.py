@@ -1,6 +1,6 @@
 import unittest
 
-from nativedroid_server import *
+from .nativedroid_server import *
 
 CHUNK_SIZE = 1024 * 1024  # 1MB
 

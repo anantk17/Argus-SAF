@@ -30,7 +30,7 @@ class CallbackHook(angr.SimProcedure):
         :return:
         """
 
-        for key, value in callbacks.iteritems():
+        for key, value in callbacks.items():
             self.call(value, [argument], 'final_call')
 
     # noinspection PyUnusedLocal
@@ -88,7 +88,7 @@ class EnvMethodModel:
         :rtype: int
         """
         total_instructions = 0
-        for func_addr, func in cfg.kb.functions.iteritems():
+        for func_addr, func in cfg.kb.functions.items():
             func_instructions = 0
             # print func.name
             for block in func.blocks:
@@ -111,7 +111,7 @@ class EnvMethodModel:
         :return: two callback functions symbols
         """
 
-        demangled_names_keys = project.loader.main_object.demangled_names.keys()
+        demangled_names_keys = list(project.loader.main_object.demangled_names.keys())
         input_callback_signature = None
         cmd_callback_signature = None
         for key in demangled_names_keys:

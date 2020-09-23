@@ -37,7 +37,7 @@ def gen_summary(jnsaf_client, so_file, jni_method_name_or_address, jni_method_si
     project = angr.Project(so_file, load_options={'main_opts': {'custom_base_addr': 0x0}})
     ssm = SourceAndSinkManager(native_ss_file, java_ss_file)
     analysis_center = AnalysisCenter(jni_method_signature, jnsaf_client, ssm)
-    if isinstance(jni_method_name_or_address, long):
+    if isinstance(jni_method_name_or_address, int):
         jni_method_addr = jni_method_name_or_address
     else:
         jni_method_symb = project.loader.main_object.get_symbol(jni_method_name_or_address)
@@ -120,9 +120,8 @@ def native_activity_analysis(jnsaf_client, so_file, custom_entry_func_name, nati
         annotation_based_analysis = project.analyses.AnnotationBasedAnalysis(
             analysis_center, entry_func_symbol.rebased_addr, list(), True, (initial_state, native_activity_argument))
         sources, sinks = annotation_based_analysis.run()
-        taint_analysis_report = \
-            annotation_based_analysis.gen_taint_analysis_report(sources, sinks)
-        print taint_analysis_report
+        taint_analysis_report = annotation_based_analysis.gen_taint_analysis_report(sources, sinks)
+        print(taint_analysis_report)
         analysis_instructions = annotation_based_analysis.count_cfg_instructions()
         total_instructions = initial_instructions + analysis_instructions
         nativedroid_logger.info('[Total Instructions] %s', total_instructions)

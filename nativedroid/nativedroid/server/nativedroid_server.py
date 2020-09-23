@@ -106,7 +106,7 @@ class NativeDroidServer(NativeDroidServicer):
         so_path = self._binary_path + request.so_digest
         dynamic_methods = get_dynamic_register_methods(so_path, None)
         method_map = []
-        for name, addr in dynamic_methods.items():
+        for name, addr in list(dynamic_methods.items()):
             method_map.append(MethodMap(method_name=name, func_addr=addr))
         return GetDynamicRegisterMapResponse(method_map=method_map)
 

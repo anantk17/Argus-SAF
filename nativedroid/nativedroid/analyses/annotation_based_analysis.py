@@ -1,5 +1,5 @@
 import copy
-from cStringIO import StringIO
+from io import StringIO
 
 from nativedroid.analyses.resolver.annotation import *
 from nativedroid.analyses.resolver.armel_resolver import ArmelResolver
@@ -71,7 +71,7 @@ class AnnotationBasedAnalysis(angr.Analysis):
         :rtype: int
         """
         total_instructions = 0
-        for func_addr, func in self.cfg.kb.functions.iteritems():
+        for func_addr, func in self.cfg.kb.functions.items():
             func_instructions = 0
             # print func.name
             for block in func.blocks:
@@ -92,7 +92,7 @@ class AnnotationBasedAnalysis(angr.Analysis):
         """
         sources_annotation = set()
         if self._arguments_summary:
-            for _, arg_summary in self._arguments_summary.iteritems():
+            for _, arg_summary in self._arguments_summary.items():
                 for annotation in arg_summary.annotations:
                     if isinstance(annotation, JobjectAnnotation):
                         worklist = list(annotation.fields_info)
@@ -157,7 +157,7 @@ class AnnotationBasedAnalysis(angr.Analysis):
                 if ssm.is_sink(fn.name):
                     sink_tag = ssm.get_sink_tags(fn.name)
                     sink_nodes[node] = sink_tag
-        for sink, (positions, tags) in sink_nodes.iteritems():
+        for sink, (positions, tags) in sink_nodes.items():
             input_state = sink.input_state
             final_states = sink.final_states
             args = self._resolver.get_taint_args(input_state, final_states, positions, tags)
@@ -250,7 +250,7 @@ class AnnotationBasedAnalysis(angr.Analysis):
         args_safsu = dict()
         rets_safsu = list()
         if self._arguments_summary:
-            for arg_index, arg_summary in self._arguments_summary.iteritems():
+            for arg_index, arg_summary in self._arguments_summary.items():
                 arg_safsu = dict()
                 for annotation in arg_summary.annotations:
                     if isinstance(annotation, JobjectAnnotation) and annotation.fields_info:
@@ -299,9 +299,9 @@ class AnnotationBasedAnalysis(angr.Analysis):
         report_file = StringIO()
         report_file.write('`' + self._jni_method_signature + '`:' + '\n')
         if args_safsu:
-            for arg_index, fields_safsu in args_safsu.iteritems():
+            for arg_index, fields_safsu in args_safsu.items():
                 arg_index = 'arg:' + str(re.split('arg|_', arg_index)[1])
-                for field_name, field_su in fields_safsu.iteritems():
+                for field_name, field_su in fields_safsu.items():
                     field_type = field_su[0]
                     field_locations = field_su[1]
                     if field_locations[0] == '~':

@@ -132,7 +132,7 @@ class JNIInvokeInterface(ExternObject):
         self._JNIEnv = self._JNINativeInterface.ptr
 
         # iterate through the mapping
-        for index, name in self.jni_invoke_interface_index_to_name.iteritems():
+        for index, name in self.jni_invoke_interface_index_to_name.items():
             # if the mappped value is None (there are 3 reserved entries), hook it with PathTerminator
             if name.startswith("reserved"):
                 addr = self.allocate(self._fptr_size)
